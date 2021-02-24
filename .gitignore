@@ -1,3 +1,9 @@
+/RemoteSystemsTempFiles/
+**/Release/
+**/core/
+**/libraries/
+**/sloeber.ino.cpp
+
 # Prerequisites
 *.d
 
@@ -30,3 +36,4 @@
 *.exe
 *.out
 *.app
+/.metadata/
