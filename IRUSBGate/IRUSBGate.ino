@@ -69,7 +69,7 @@ void setup(void) {
   digitalWrite(GATE_PIN, LOW);
   pinMode(IR_PIN, INPUT);
   digitalWrite(IR_PIN, LOW);
-  attachInterrupt(0, timeCritical, FALLING); // Use INT0(P2) on the Digispark
+  attachInterrupt(0, irNecRead, FALLING); // Use INT0(P2) on the Digispark
   interrupts(); // enable interrupts as a last command of setup
 }
 
@@ -210,7 +210,7 @@ void debugOutput() {
   DigiKeyboard.delay(3*LAG);
 }
 
-char* uintToStr(uint32_t value) {
+const char* uintToStr(uint32_t value) {
   if (value == 0) {
     return "0";
   }
@@ -222,7 +222,7 @@ char* uintToStr(uint32_t value) {
 }
 
 /* Read the IR code with NEC protocol. */
-void timeCritical(void) {
+void irNecRead(void) {
   if (isDataValid) {
     return;
   }
@@ -235,8 +235,8 @@ void timeCritical(void) {
     return;
   }
 
-  //uint16_t timeDelta = (uint16_t) timeDeltaBig;
-  uint32_t timeDelta = timeDeltaBig;
+  uint16_t timeDelta = (uint16_t) timeDeltaBig;
+  //uint32_t timeDelta = timeDeltaBig;
 
   if (timeDelta <= 2600) {
     if (!isReadingActive || timeDelta <= 950) {
